@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $product->title }}</h5>
                     <p class="card-text">{{ $product->description }}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="{{ route('basket.add', $product->id) }}" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         @empty
