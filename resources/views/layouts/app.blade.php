@@ -40,9 +40,16 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <button type="button" class="btn btn-primary">
-                        Basket <span class="badge badge-light">4</span>
-                    </button>
+
+                    <li class="nav-item">
+                        <button type="button" class="nav-link btn btn-primary">
+                            Basket <span class="badge badge-light">4</span>
+                        </button>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('refresh.session') }}">Refresh Session</a>
+                    </li>
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
@@ -82,6 +89,7 @@
     </nav>
 
     <main class="py-4">
+        @include('partials.alerts')
         @yield('content')
     </main>
 </div>
