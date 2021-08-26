@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Support;
+namespace App\Support\Basket;
 
 
 use App\Exceptions\QuantityExceededException;
@@ -53,6 +53,11 @@ class Basket
     public function has(Product $product)
     {
         return $this->storage->exist($product->id);
+    }
+
+    public function itemCount(): int
+    {
+        return $this->storage->count();
     }
 
 
