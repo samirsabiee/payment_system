@@ -21,6 +21,7 @@
 </head>
 <body>
 <div id="app">
+    @inject('basket','App\Support\Basket\Basket')
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -43,7 +44,7 @@
 
                     <li class="nav-item">
                         <button type="button" class="nav-link btn btn-primary">
-                            Basket <span class="badge badge-light">4</span>
+                            Basket <span class="badge badge-light">{{ $basket->itemCount() }}</span>
                         </button>
                     </li>
 
