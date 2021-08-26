@@ -9,7 +9,7 @@ use Session;
 
 class SessionStorage implements Contracts\StorageInterface, Countable
 {
-    private $bucket;
+    private string $bucket;
 
     /**
      * SessionStorage constructor.
@@ -33,7 +33,7 @@ class SessionStorage implements Contracts\StorageInterface, Countable
 
     public function all()
     {
-        return Session::get($this->bucket);
+        return Session::get($this->bucket) ?? [];
     }
 
     public function exist($index): bool
@@ -51,8 +51,8 @@ class SessionStorage implements Contracts\StorageInterface, Countable
         Session::forget($this->bucket);
     }
 
-    public function count()
+    public function count(): int
     {
-        // TODO: Implement count() method.
+        return count($this->all());
     }
 }
