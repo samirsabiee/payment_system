@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\QuantityExceededException;
+use App\Http\Requests\CheckoutRequest;
 use App\Models\Product;
 use App\Support\Basket\Basket;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class BasketController extends Controller
 {
@@ -17,6 +19,7 @@ class BasketController extends Controller
      */
     public function __construct(Basket $basket)
     {
+        $this->middleware('auth')->only(['checkoutForm', 'checkout']);
         $this->basket = $basket;
     }
 
@@ -34,5 +37,24 @@ class BasketController extends Controller
     {
         $products = $this->basket->all();
         return view('basket', compact('products'));
+    }
+
+    /**
+     * @throws QuantityExceededException
+     */
+    public function update(Request $request, Product $product): RedirectResponse
+    {
+        $this->basket->update($product, $request->quantity);
+        return back();
+    }
+
+    public function checkoutForm()
+    {
+        return view('checkout');
+    }
+
+    public function checkout(CheckoutRequest $request)
+    {
+        dd($request->all());
     }
 }
