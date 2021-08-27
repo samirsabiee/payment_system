@@ -43,9 +43,9 @@
                 <ul class="navbar-nav ml-auto">
 
                     <li class="nav-item">
-                        <button type="button" class="nav-link btn btn-primary">
+                        <a href="{{ route('basket.index') }}" class="nav-link btn btn-primary">
                             Basket <span class="badge badge-light">{{ $basket->itemCount() }}</span>
-                        </button>
+                        </a>
                     </li>
 
                     <li class="nav-item">
