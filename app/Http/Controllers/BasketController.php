@@ -29,4 +29,10 @@ class BasketController extends Controller
             return back()->with('failed', true);
         }
     }
+
+    public function index()
+    {
+        $products = $this->basket->all();
+        return view('basket', compact('products'));
+    }
 }
