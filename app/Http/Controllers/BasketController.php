@@ -6,21 +6,25 @@ use App\Exceptions\QuantityExceededException;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Product;
 use App\Support\Basket\Basket;
+use App\Support\Payment\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class BasketController extends Controller
 {
     private Basket $basket;
+    private Transaction $transaction;
 
     /**
      * BasketController constructor.
      * @param Basket $basket
+     * @param Transaction $transaction
      */
-    public function __construct(Basket $basket)
+    public function __construct(Basket $basket, Transaction $transaction)
     {
         $this->middleware('auth')->only(['checkoutForm', 'checkout']);
         $this->basket = $basket;
+        $this->transaction = $transaction;
     }
 
     public function add(Product $product): RedirectResponse
@@ -53,8 +57,9 @@ class BasketController extends Controller
         return view('checkout');
     }
 
-    public function checkout(CheckoutRequest $request)
+    public function checkout(CheckoutRequest $request): RedirectResponse
     {
-        dd($request->all());
+        $order = $this->transaction->checkout();
+        return redirect()->route('home')->with('successOrder', __('payment.success payment', ['orderNum' => $order->id]));
     }
 }
