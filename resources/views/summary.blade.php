@@ -21,4 +21,3 @@
         </div>
     </div>
 </div>
-<a href="#" class="btn btn-primary btn-block mt-4">Continue To pay</a>
