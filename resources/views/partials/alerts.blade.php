@@ -9,3 +9,9 @@
         Operation Failed!
     </div>
 @endif
+
+@if(session('successOrder'))
+    <div class="alert alert-success mx-3">
+       {{ session('successOrder') }}
+    </div>
+@endif
