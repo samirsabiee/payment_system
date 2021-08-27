@@ -21,6 +21,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::view('/', 'welcome');
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('basket/add/{product}', [BasketController::class, 'add'])->name('basket.add');
+Route::get('basket', [BasketController::class, 'index'])->name('basket.index');
 Route::get('refresh/session', function () {
     resolve(StorageInterface::class)->clear();
     return redirect()->route('products.index')->with('success', true);
