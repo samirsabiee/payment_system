@@ -11,6 +11,7 @@ use App\Support\Storage\Contracts\StorageInterface;
 class Basket
 {
     private StorageInterface $storage;
+    public const TRANSPORT_COST = 10;
 
     /**
      * Basket constructor.
@@ -79,6 +80,11 @@ class Basket
             $total += $item->price * $item->quantity;
         }
         return $total;
+    }
+
+    public function clear()
+    {
+        $this->storage->clear();
     }
 
 
