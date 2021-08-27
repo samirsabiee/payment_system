@@ -22,6 +22,9 @@ Route::view('/', 'welcome');
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('basket/add/{product}', [BasketController::class, 'add'])->name('basket.add');
 Route::get('basket', [BasketController::class, 'index'])->name('basket.index');
+Route::post('basket/update/{product}', [BasketController::class, 'update'])->name('basket.update');
+Route::get('basket/checkout', [BasketController::class, 'checkoutForm'])->name('basket.checkout.form');
+Route::post('basket/checkout', [BasketController::class, 'checkout'])->name('basket.checkout');
 Route::get('refresh/session', function () {
     resolve(StorageInterface::class)->clear();
     return redirect()->route('products.index')->with('success', true);
