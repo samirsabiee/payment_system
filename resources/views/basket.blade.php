@@ -22,6 +22,7 @@
                                 <div class="input-group">
                                     <select class="custom-select" id="quantity" name="quantity"
                                             aria-label="Quantity Product">
+                                        <option value="0">0</option>
                                         @for($i = 1; $i <= $product->stock; $i++)
                                             <option
                                                 {{ $i == $product->quantity ? 'selected' : '' }} value="{{ $i }}">{{ $i }}</option>
