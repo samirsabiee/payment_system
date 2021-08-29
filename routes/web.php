@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BasketController;
+use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Support\Storage\Contracts\StorageInterface;
@@ -27,6 +28,8 @@ Route::post('basket/update/{product}', [BasketController::class, 'update'])->nam
 Route::get('basket/checkout', [BasketController::class, 'checkoutForm'])->name('basket.checkout.form');
 Route::post('basket/checkout', [BasketController::class, 'checkout'])->name('basket.checkout');
 Route::post('payment/{gateway}/callback', [PaymentController::class, 'verify'])->name('payment.verify');
+Route::post('coupon', [CouponsController::class, 'store'])->name('coupons.store');
+Route::get('coupon/remove', [CouponsController::class, 'remove'])->name('coupons.remove');
 Route::get('refresh/session', function () {
     resolve(StorageInterface::class)->clear();
     return redirect()->route('products.index')->with('success', true);
