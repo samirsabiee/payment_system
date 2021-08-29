@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class Pasargad implements GatewayInterface
 {
 
-    public function pay(Order $order)
+    public function pay(Order $order, int $amount)
     {
         dd($this->getName() . ' pay');
     }

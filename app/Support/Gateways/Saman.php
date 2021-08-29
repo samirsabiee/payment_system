@@ -25,9 +25,9 @@ class Saman implements GatewayInterface
     }
 
 
-    public function pay(Order $order)
+    public function pay(Order $order, int $amount)
     {
-        //$this->redirectToBank($order);
+        //$this->redirectToBank($order, $amount);
         resolve(PaymentController::class)->verify([
             'State' => null,
             'StateCode' => null,
@@ -41,10 +41,10 @@ class Saman implements GatewayInterface
         ]);
     }
 
-    private function redirectToBank($order)
+    private function redirectToBank($order, $amount)
     {
         echo "<form method='post' id='samanpayment' action='https://sep.shaparak.ir/payment.aspx'>
-                <input type='hidden' name='Amount' value='{ $order->amount }'>
+                <input type='hidden' name='Amount' value='{ $amount }'>
                 <input type='hidden' name='ResNum' value='{ $order->code }'>
                 <input type='hidden' name='TerminalId' value='{ $this->merchantID }'>
                 <input type='hidden' name='RedirectURL' value='{ $this->callback }'>

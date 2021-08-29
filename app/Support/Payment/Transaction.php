@@ -8,6 +8,7 @@ use App\Events\OrderRegistered;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Support\Basket\Basket;
+use App\Support\Cost\Contracts\CostInterface;
 use App\Support\Gateways\Contracts\GatewayInterface;
 use App\Support\Gateways\Pasargad;
 use App\Support\Gateways\Saman;
@@ -20,16 +21,19 @@ class Transaction
 
     private Request $request;
     private Basket $basket;
+    private CostInterface $cost;
 
     /**
      * Transaction constructor.
      * @param Request $request
      * @param Basket $basket
+     * @param CostInterface $cost
      */
-    public function __construct(Request $request, Basket $basket)
+    public function __construct(Request $request, Basket $basket, CostInterface $cost)
     {
         $this->request = $request;
         $this->basket = $basket;
+        $this->cost = $cost;
     }
 
     public function checkout()
@@ -49,7 +53,7 @@ class Transaction
 
         if ($payment->isOnline()) {
             /*TODO use return to redirect to bank page*/
-            return $this->gatewayFactory()->pay($order);
+            return $this->gatewayFactory()->pay($order, $this->cost->getTotalCost());
         }
 
         $this->normalizeQuantity($order);
@@ -76,7 +80,7 @@ class Transaction
     {
         $order = Order::create([
             'user_id' => auth()->user()->id,
-            'amount' => $this->basket->subTotal() + Basket::TRANSPORT_COST,
+            'amount' => $this->basket->subTotal(),
             'code' => bin2hex(Str::random(64))
         ]);
 
@@ -90,7 +94,7 @@ class Transaction
         return Payment::create([
             'order_id' => $order->id,
             'method' => ($this->request->only(['method']))['method'],
-            'amount' => $order->amount
+            'amount' => $this->cost->getTotalCost()
         ]);
     }
 
