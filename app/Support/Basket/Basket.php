@@ -41,12 +41,13 @@ class Basket
         if (!$product->hasStock($quantity)) {
             throw new QuantityExceededException();
         }
-        if (!$quantity) {
+        if (!(int)$quantity) {
             $this->storage->unset($product->id);
+        } else {
+            $this->storage->set($product->id, [
+                'quantity' => $quantity
+            ]);
         }
-        $this->storage->set($product->id, [
-            'quantity' => $quantity
-        ]);
     }
 
     public function get(Product $product)
