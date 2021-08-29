@@ -13,4 +13,9 @@ class Payment extends Model
     protected $attributes = [
         'status' => 0,
     ];
+
+    public function isOnline(): bool
+    {
+        return $this->method === 'online';
+    }
 }
