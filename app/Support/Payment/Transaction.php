@@ -43,6 +43,8 @@ class Transaction
         try {
             $order = $this->makeOrder();
 
+            $order->generateInvoice();
+
             $payment = $this->makePayment($order);
 
             DB::commit();
@@ -61,6 +63,8 @@ class Transaction
         event(new OrderRegistered($order));
 
         $this->basket->clear();
+
+        session()->forget('coupon');
 
         return $order;
 
@@ -81,7 +85,7 @@ class Transaction
         $order = Order::create([
             'user_id' => auth()->user()->id,
             'amount' => $this->basket->subTotal(),
-            'code' => bin2hex(Str::random(64))
+            'code' => bin2hex(Str::random())
         ]);
 
         $order->products()->attach($this->products());
