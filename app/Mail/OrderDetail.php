@@ -31,7 +31,7 @@ class OrderDetail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.order-email')->with([
+        return $this->view('emails.order-email')->attach($this->order->invoicePath())->with([
             'order' => $this->order
         ]);
     }
