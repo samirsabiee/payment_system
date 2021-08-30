@@ -4,6 +4,7 @@
 namespace App\Support\Discount;
 
 
+use App\Models\Coupon;
 use App\Support\Cost\BasketCost;
 
 class DiscountManager
