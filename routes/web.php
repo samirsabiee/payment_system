@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\CouponsController;
+use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use App\Support\Storage\Contracts\StorageInterface;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +33,8 @@ Route::post('basket/checkout', [BasketController::class, 'checkout'])->name('bas
 Route::post('payment/{gateway}/callback', [PaymentController::class, 'verify'])->name('payment.verify');
 Route::post('coupon', [CouponsController::class, 'store'])->name('coupons.store');
 Route::get('coupon/remove', [CouponsController::class, 'remove'])->name('coupons.remove');
+Route::get('orders', [OrdersController::class, 'index'])->name('orders.index');
+Route::get('invoice/{order}', [InvoicesController::class, 'show'])->name('invoice.show');
 Route::get('refresh/session', function () {
     resolve(StorageInterface::class)->clear();
     return redirect()->route('products.index')->with('success', true);
